@@ -33,7 +33,6 @@ export class BookList extends React.Component{
             this.props.book.createState.pending || 
             this.props.book.updateState.pending || 
             this.props.book.deleteState.pending){
-            
             console.log("pending");
             content = (
                 <div className="d-flex justify-content-center">
@@ -42,9 +41,14 @@ export class BookList extends React.Component{
                     </div> 
                 </div>
             );
+            return(
+                <div>
+                    <h2 style={{marginLeft:'5px'}}><CreateBookButton/>Books</h2>
+                    {content}
+                </div>
+            );
         }
-        
-        if( this.props.book.readState.success || 
+        else if( this.props.book.readState.success || 
             this.props.book.createState.success || 
             this.props.book.updateState.success || 
             this.props.book.deleteState.success){
@@ -65,27 +69,39 @@ export class BookList extends React.Component{
                 </tbody>    
             </table>
             );
+            return(
+                <div>
+                    <h2 style={{marginLeft:'5px'}}><CreateBookButton/>Books</h2>
+                    {content}
+                </div>
+            );
         }
-        
-        if( this.props.book.readState.failure || 
+        else if( this.props.book.readState.failure || 
             this.props.book.createState.failure || 
             this.props.book.updateState.failure || 
             this.props.book.deleteState.failure){
-            
                 console.log("failure");
                 content = (
                 <div className="alert alert-danger" role="alert">
                     Your Previous Operation Really Broke Stuff.
                 </div>
             );
+            return(
+                <div>
+                    <h2 style={{marginLeft:'5px'}}><CreateBookButton/>Books</h2>
+                    {content}
+                </div>
+            );
         }
-
-        return(
+        else {
+            console.log("final condition");
+            return(
             <div>
                 <h2 style={{marginLeft:'5px'}}><CreateBookButton/>Books</h2>
                 {content}
             </div>
-        );
+            );
+        }
         
     }
 }

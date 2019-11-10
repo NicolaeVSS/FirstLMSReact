@@ -7,6 +7,8 @@ import {Header} from './header.js';
 import {Home} from './home.js';
 import {BookList} from '../components/BookList';
 import BookStore from '../stores/bookStore';
+import {AuthorList} from '../components/AuthorList';
+import AuthorStore from '../stores/authorStore';
 
 
 export class App extends React.Component{
@@ -36,6 +38,15 @@ export class App extends React.Component{
                     failure:false  
                 },
                 error: ''
+            },
+            author:{
+                authorList: [],
+                readState:{
+                    pending:false, 
+                    success:false, 
+                    failure:false  
+                },
+                error:''
             }
         }
     }
@@ -47,6 +58,7 @@ export class App extends React.Component{
                 <Switch> 
                     <Route exact path='/' component={Home}/>
                     <Route path='/books' render={(props) => (<BookList {...props} book={this.state.book} />)}/>
+                    <Route path='/authors' render={(props) => (<AuthorList {...props} author={this.state.author} />)}/>
                 </Switch>
             </div>
         );
@@ -55,15 +67,20 @@ export class App extends React.Component{
     // subscribe to the store 
     componentDidMount(){
         BookStore.addChangeListener(this._onBookChange.bind(this));
+        AuthorStore.addChangeListener(this._onAuthorChange.bind(this));
     }
 
     // unsubscribe
     componentWillUnmount(){
         BookStore.removeChangeListener(this._onBookChange.bind(this));
+        AuthorStore.removeChangeListener(this._onAuthorChange.bind(this));
     }
 
     // change state using info from book store
     _onBookChange(){
         this.setState({book: BookStore.getAllBooks()});
+    }
+    _onAuthorChange(){
+        this.setState({author: AuthorStore.getAllAuthors()});
     }
 }

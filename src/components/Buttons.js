@@ -29,7 +29,7 @@ export const UpdateBookButton = (props) => {
 
         // not props book
         let book = {
-            bookId:event.target.bookId.value, // from props
+            bookId:event.target.bookId.value,
             title:event.target.title.value,
             authorId:event.target.author.value,
             publisherId:event.target.publisher.value,
