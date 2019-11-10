@@ -87,7 +87,6 @@ const BooksActions = {
                 actionType: 'delete_books_failure'
             });
         });
-
     }
 }
 
