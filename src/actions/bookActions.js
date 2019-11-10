@@ -11,10 +11,15 @@ const BooksActions = {
         });
 
         axios.post(backendURL + '/book', book)
-        .then( () => {
+        .then( (res) => {
             Dispatcher.dispatch({
                 actionType: 'create_books_successful',
-                data: book
+                data: {
+                    bookId:res.data.insertId,
+                    title:book.title,
+                    authorId:book.authorId,
+                    publisherId:book.publisherId
+                }
             });
         })
         .catch( (error) => {
@@ -50,10 +55,10 @@ const BooksActions = {
         });
 
         axios.put(backendURL + '/book/' + book.bookId, book)
-        .then( (res) => {
+        .then( () => {
             Dispatcher.dispatch({
                 actionType: 'update_books_successful',
-                data: res.data
+                data: book
             });
         })
         .catch( (error) => {
@@ -70,9 +75,10 @@ const BooksActions = {
         });
 
         axios.delete(backendURL + '/book/' + bookId)
-        .then( (res) => {
+        .then( () => {
             Dispatcher.dispatch({
-                actionType: 'delete_books_successful'
+                actionType: 'delete_books_successful',
+                data: bookId
             });
         })
         .catch( (error) => {

@@ -65,7 +65,7 @@ class BookStoreClass extends EventEmitter{ // EventEmitter is from NodeJS. when 
     }
 
     resetUpdateState(){
-        _bookStore.book.UpdateState = {
+        _bookStore.book.updateState = {
             pending:false,
             success:false,
             failure:false
@@ -84,7 +84,7 @@ class BookStoreClass extends EventEmitter{ // EventEmitter is from NodeJS. when 
 // create an instance of this class
 const BookStore = new BookStoreClass();
 
-Dispatcher.register( (action) => {                  // dispatcher is made aware of store, and passes an action
+Dispatcher.register( (action) => {  // dispatcher is made aware of store, and passes an action
 
     switch (action.actionType){
         // CREATE STATES
@@ -126,7 +126,15 @@ Dispatcher.register( (action) => {                  // dispatcher is made aware 
         // UPDATE STATES
         case 'update_books_successful':
             BookStore.resetUpdateState();
-            // _bookStore.book.bookList.push(action.data); // only if the backend returns the entity
+            _bookStore.book.bookList
+            .forEach(ele => {
+                if(ele.bookId == action.data.bookId)
+                {
+                    ele.title = action.data.title;
+                    ele.authorId = action.data.authorId;
+                    ele.publisherId = action.data.publisherId;
+                }
+            });
             _bookStore.book.updateState.success = true;
             BookStore.emitChange();
             break;
@@ -144,7 +152,7 @@ Dispatcher.register( (action) => {                  // dispatcher is made aware 
         // DELETE STATES
         case 'delete_books_successful':
             BookStore.resetDeleteState();
-            // _bookStore.book.bookList.push(action.data); // only if the backend returns the entity
+            _bookStore.book.bookList = _bookStore.book.bookList.filter(ele => ele.bookId !== action.data);
             _bookStore.book.deleteState.success = true;
             BookStore.emitChange();
             break;
