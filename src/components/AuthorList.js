@@ -19,7 +19,6 @@ export class AuthorList extends React.Component{
     }
 
     render() {
-        
         let content = '';
 
         if( this.props.author.readState.pending){
@@ -59,7 +58,6 @@ export class AuthorList extends React.Component{
     }
 }
 
-// let other devs know, these are the props that have to be provided to this component to render properly
 AuthorList.propTypes = {
     author: PropTypes.object.isRequired
 };

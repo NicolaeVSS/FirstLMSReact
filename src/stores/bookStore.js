@@ -126,7 +126,7 @@ Dispatcher.register( (action) => {  // dispatcher is made aware of store, and pa
         // UPDATE STATES
         case 'update_books_successful':
             BookStore.resetUpdateState();
-            _bookStore.book.bookList
+            _bookStore.book.bookList                // findIndex() then update (by value or reference)
             .forEach(ele => {
                 if(ele.bookId == action.data.bookId)
                 {
